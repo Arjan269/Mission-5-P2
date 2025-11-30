@@ -1,18 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ZMaps from "./pages/Z-maps";
-import Navbar from "./common/Navbar"; // import Navbar
+import PriceComp from "./pages/Price-comp";  // NEW IMPORT
+import Navbar from "./common/Navbar";
 
 export default function App() {
   return (
     <BrowserRouter>
-      {/* Use the common Navbar */}
       <Navbar />
 
-      {/* Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/maps" element={<ZMaps />} />
+        <Route path="/price-comp" element={<PriceComp />} /> {/* NEW ROUTE */}
       </Routes>
     </BrowserRouter>
   );
