@@ -1,6 +1,5 @@
 .container {
   flex: 1;
-  width: 100%;
   overflow: visible;
   height: 100%;
   display: flex;
@@ -9,11 +8,10 @@
 }
 
 .cardOverlayContainer {
-  /* border: 1px solid red; */
+  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
   width: fit-content;
   max-width: 400px;
   padding: 1rem;
@@ -23,8 +21,9 @@
 }
 
 .mapContainer {
+  /* border: 3px solid blue; */
   display: flex;
   flex-grow: 1;
   width: auto;
-  height: 100%;
+  padding: 1rem;
 }
