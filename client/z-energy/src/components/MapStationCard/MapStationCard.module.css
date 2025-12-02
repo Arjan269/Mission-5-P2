@@ -1,0 +1,25 @@
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  padding-top: 0px;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  /* border: 1px solid red; */
+}
+
+.card:last-child {
+  border-bottom: none;
+}
+
+.servicesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-left: 1.2rem;
+}
+
+.servicesList li {
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
