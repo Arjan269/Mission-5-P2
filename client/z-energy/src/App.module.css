@@ -1,0 +1,23 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  flex-shrink: 0;
+}
+
+.container {
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+  /* border: 1px solid purple; */
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
