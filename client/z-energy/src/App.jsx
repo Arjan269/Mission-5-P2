@@ -7,13 +7,19 @@ import Navbar from "./common/Navbar";
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <div className="app-container">
+        <header className="header">
+          <Navbar />
+        </header>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/locations" element={<Locations />} />
-        <Route path="/price-comp" element={<PriceComp />} /> {/* NEW ROUTE */}
-      </Routes>
+        <main className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/locations" element={<Locations />} />
+            <Route path="/price-comp" element={<PriceComp />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   );
 }
