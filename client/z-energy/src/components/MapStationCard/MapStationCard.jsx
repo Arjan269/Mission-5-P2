@@ -24,7 +24,23 @@ export default function MapStationCard({ station }) {
         </ul>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.visitButton}>Visit Now</button>
+          <button className={styles.visitButton}>
+            Visit Now
+            <span className={styles.iconCircle}>
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="#F47C20"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 2 L8 6 L4 10" />
+              </svg>
+            </span>
+          </button>
         </div>
       </div>
     </div>
