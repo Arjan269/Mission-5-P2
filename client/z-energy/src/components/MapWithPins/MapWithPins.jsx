@@ -11,8 +11,11 @@ export default function MapWithPins({
   });
 
   const center = selectedStation
-    ? { lat: selectedStation.lat, lng: selectedStation.lng }
-    : { lat: stations[0].lat, lng: stations[0].lng };
+    ? {
+        lat: selectedStation.coordinates.lat,
+        lng: selectedStation.coordinates.lng,
+      }
+    : { lat: stations[0].coordinates.lat, lng: stations[0].coordinates.lng };
 
   return (
     <div className={styles.outerDiv}>
@@ -24,7 +27,10 @@ export default function MapWithPins({
         >
           {selectedStation && (
             <Marker
-              position={{ lat: selectedStation.lat, lng: selectedStation.lng }}
+              position={{
+                lat: selectedStation.coordinates.lat,
+                lng: selectedStation.coordinates.lng,
+              }}
               onClick={() => onSelectStation(selectedStation)}
             />
           )}

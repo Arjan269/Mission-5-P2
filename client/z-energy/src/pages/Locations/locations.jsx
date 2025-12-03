@@ -5,22 +5,17 @@ import MapWithPins from "../../components/MapWithPins/MapWithPins";
 
 //Will replace with actual API calls once backend is done
 import tempStationsData from "./../../data/tempStationsData";
-import tempCoordinates from "../../data/tempCoordinates";
+
 
 export default function Location() {
-  //combining the data together - to pass to <MapWithPins> Component
-  const stationsWithCoords = tempStationsData.map((station) => {
-    const coord = tempCoordinates.find((c) => c.name === station.name);
-    return { ...station, ...coord };
-  });
 
-  const [selectedStation, setSelectedStation] = useState(stationsWithCoords[0]);
+  const [selectedStation, setSelectedStation] = useState(tempStationsData[0]);
 
   return (
     <div className={styles.container}>
       {/* Overlay */}
       <div className={styles.cardOverlayContainer}>
-        {stationsWithCoords.map((station) => (
+        {tempStationsData.map((station) => (
           <div key={station.name} onClick={() => setSelectedStation(station)}>
             <MapStationCard station={station} />
           </div>
@@ -30,7 +25,7 @@ export default function Location() {
       {/* Map */}
       <div className={styles.mapContainer}>
         <MapWithPins
-          stations={stationsWithCoords}
+          stations={tempStationsData}
           selectedStation={selectedStation}
           onSelectStation={setSelectedStation}
         />
