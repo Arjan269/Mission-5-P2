@@ -6,9 +6,7 @@ import MapWithPins from "../../components/MapWithPins/MapWithPins";
 //Will replace with actual API calls once backend is done
 import tempStationsData from "./../../data/tempStationsData";
 
-
 export default function Location() {
-
   const [selectedStation, setSelectedStation] = useState(tempStationsData[0]);
 
   return (

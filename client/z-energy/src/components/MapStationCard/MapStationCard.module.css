@@ -1,25 +1,69 @@
 .card {
   width: 100%;
   box-sizing: border-box;
-  padding: 1rem;
-  padding-top: 0px;
-  margin-bottom: 1rem;
+  /* padding: 1rem; */
+  /* padding-top: 0px; */
+  /* margin-bottom: 1rem; */
   border-bottom: 1px solid #ccc;
   /* border: 1px solid red; */
 }
 
-.card:last-child {
+/* TODO: did not work as expected -- need new solution */
+/*  */
+/* .card:last-child {
   border-bottom: none;
-}
+} */
 
 .servicesList {
+  /* border: 1px solid red; */
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  padding-left: 1.2rem;
+  gap: 0rem 0.5rem;
+  padding-left: 1rem;
+  width: 250px;
 }
 
-.servicesList li {
+.serviceItem {
   flex-shrink: 0;
   margin-left: 1rem;
+  font-size: 12px;
 }
+
+.topOfCard {
+  /* border: 1px solid red; */
+  padding-left: 1rem;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+
+.topOfCard h2, h3, p {
+  margin: 0px;
+}
+
+.bottomOfCard {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: flex-end;
+  /* border: 1px solid red; */
+}
+
+.visitButton {
+  height: 25px;
+  width: 100px;
+  margin: 1.5rem;
+  border-radius: 10px;
+  background-color: #F47C20;
+  color: white;
+  border-color: transparent;
+  font-weight: 900;
+}
+
+
