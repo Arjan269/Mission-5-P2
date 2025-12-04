@@ -1,6 +1,13 @@
 import styles from "./MapStationCard.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function MapStationCard({ station }) {
+  const navigate = useNavigate();
+
+  const handleVisitClick = () => {
+    navigate("/station", { state: { station: station } });
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.topOfCard}>
@@ -24,7 +31,7 @@ export default function MapStationCard({ station }) {
         </ul>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.visitButton}>
+          <button className={styles.visitButton} onClick={handleVisitClick}>
             Visit Now
             <span className={styles.iconCircle}>
               <svg
