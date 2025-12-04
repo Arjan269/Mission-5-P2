@@ -5,7 +5,7 @@ const seedData = [
     address: "50-60 Ash Street",
     suburb: "Avondale",
     city: "Auckland",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -36.895949701793576, lng: 174.68855725030616 },
     prices: {
       "Z91 Unleaded": { price: 2.89 },
       "ZX Premium": { price: 3.19 },
@@ -39,7 +39,7 @@ const seedData = [
     address: "470 Pakuranga Highway",
     suburb: "Pakuranga",
     city: "Auckland",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -36.90017212619605, lng: 174.89946698608884 },
     prices: {
       "Z91 Unleaded": { price: 2.92 },
       "ZX Premium": { price: 3.25 },
@@ -79,7 +79,7 @@ const seedData = [
     address: "301 Ellerslie-Panmure Highway",
     suburb: "Mt Wellington",
     city: "Auckland",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -36.89823346038302, lng: 174.82463950448215 },
     prices: {
       "Z91 Unleaded": { price: 2.87 },
       "ZX Premium": { price: 3.22 },
@@ -112,7 +112,7 @@ const seedData = [
     address: "134-152 Main Road, SH16",
     suburb: "Kumeu",
     city: "Auckland",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -36.77427941727419, lng: 174.55227621644866 },
     prices: {
       "Z91 Unleaded": { price: 2.85 },
       "ZX Premium": { price: 3.2 },
@@ -150,7 +150,7 @@ const seedData = [
     address: "Cnr Eleventh Avenue and Cameron Road",
     suburb: "Tauranga",
     city: "Tauranga",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -37.697982162420466, lng: 176.15896692263408 },
     prices: {
       "Z91 Unleaded": { price: 2.95 },
       "ZX Premium": { price: 3.28 },
@@ -185,7 +185,7 @@ const seedData = [
     address: "Cnr Curletts Road and Blenheim Road",
     suburb: "Christchurch",
     city: "Christchurch",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -43.53857572026828, lng: 172.56787260187068 },
     prices: {
       "Z91 Unleaded": { price: 2.78 },
       "ZX Premium": { price: 3.1 },
@@ -220,7 +220,7 @@ const seedData = [
     address: "834 High Street, Boulcott",
     suburb: "Lower Hutt",
     city: "Lower Hutt",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -41.19778300996574, lng: 174.93751095869897 },
     prices: {
       "Z91 Unleaded": { price: 2.8 },
       "ZX Premium": { price: 3.12 },
@@ -252,7 +252,7 @@ const seedData = [
     address: "Cnr Seaview Road and Parkside Road",
     suburb: "Seaview",
     city: "Lower Hutt",
-    coordinates: { lat: null, lng: null },
+    coordinates: { lat: -41.23620456567282, lng: 174.90620620252326 },
     prices: {
       "Z91 Unleaded": { price: 2.82 },
       "ZX Premium": { price: 3.15 },
