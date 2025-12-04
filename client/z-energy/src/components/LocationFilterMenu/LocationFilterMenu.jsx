@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./LocationFilterMenu.module.css";
+import SearchIcon from "../../assets/Search.svg";
 
 export default function LocationFilterMenu({
   stations,
@@ -21,7 +22,9 @@ export default function LocationFilterMenu({
 
   return (
     <div className={styles.filterMenu}>
-      <button className={styles.searchButton}>🔍</button>
+      <button className={styles.searchButton}>
+        <img src={SearchIcon} className={styles.searchIcon}></img>
+      </button>
       <div className={styles.servicesContainer}>
         {services.map((service) => (
           <button

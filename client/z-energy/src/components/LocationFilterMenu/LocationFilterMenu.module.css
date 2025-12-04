@@ -26,3 +26,19 @@ button {
   color: white;
   border-radius: 4px;
 }
+
+.searchButton {
+  display: flex;        /* needed for align-items & justify-content to work */
+  align-items: center;  
+  justify-content: center;
+  margin: 0px;
+  padding: 5px;
+  border-radius: 50%;
+
+}
+
+.searchIcon {
+  height: 15px;
+  width: 15px;
+  display: block;       /* removes any inline spacing */
+}

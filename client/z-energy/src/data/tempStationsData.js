@@ -20,8 +20,8 @@ const stations = [
       "Z Diesel",
     ],
     coordinates: {
-      lat: -41.2865,
-      lng: 174.7762,
+      lat: -41.32572336545268,
+      lng: 174.81038529636726,
     },
   },
   {
@@ -42,8 +42,8 @@ const stations = [
       "Z Diesel",
     ],
     coordinates: {
-      lat: -35.4141,
-      lng: 173.7768,
+      lat: -35.40596361567608,
+      lng: 173.80351745110016,
     },
   },
   {
@@ -52,8 +52,8 @@ const stations = [
     isOpen24Hours: true,
     openingHours: {},
     services: [
-      "EV Charging – Fast",
-      "EV Charging – Ultra-Fast",
+      "EV Charging - Fast",
+      "EV Charging - Ultra-Fast",
       "f'real",
       "Pre-order Coffee",
       "Pay in app",
@@ -71,8 +71,8 @@ const stations = [
       "Z Diesel",
     ],
     coordinates: {
-      lat: -39.3402,
-      lng: 174.2841,
+      lat: -39.33752439025552,
+      lng: 174.28366606708698,
     },
   },
   {
@@ -89,7 +89,7 @@ const stations = [
       sunday: "6:00 am - 10:00 pm",
     },
     services: [
-      "EV Charging – Ultra-Fast",
+      "EV Charging - Ultra-Fast",
       "f'real",
       "Pre-order Coffee",
       "Pay in app",
@@ -107,8 +107,8 @@ const stations = [
       "Z Diesel",
     ],
     coordinates: {
-      lat: -41.2894,
-      lng: 174.7746,
+      lat: -41.29710932422774,
+      lng: 174.77652083941632,
     },
   },
   {
@@ -131,8 +131,8 @@ const stations = [
       "Z Diesel",
     ],
     coordinates: {
-      lat: -36.909,
-      lng: 174.8191,
+      lat: -36.898234241009234,
+      lng: 174.82463896056854,
     },
   },
 ];
