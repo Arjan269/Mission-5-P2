@@ -6,7 +6,7 @@ const Station = require("../models/Station");
 // Returns: _id, name, suburb, city (for dropdown list)
 exports.getStationsList = async (req, res) => {
   try {
-    const stations = await Station.find({}, "name suburb city");
+    const stations = await Station.find({});
 
     res.json(stations);
   } catch (err) {
@@ -47,7 +47,7 @@ exports.compareStations = async (req, res) => {
 
     res.json({
       left: station1 || null,
-      right: station2 || null
+      right: station2 || null,
     });
   } catch (err) {
     console.error("Error comparing stations:", err);
