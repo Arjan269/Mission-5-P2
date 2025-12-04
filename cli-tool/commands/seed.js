@@ -21,5 +21,6 @@ module.exports = async function seedDatabase() {
     console.error("Error seeding database:", err);
   } finally {
     await mongoose.disconnect();
+    console.log("Disconnected from MongoDB");
   }
 };
