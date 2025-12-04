@@ -25,15 +25,17 @@ export default function MapWithPins({
           center={center}
           zoom={14}
         >
-          {selectedStation && (
+          {/* Show all pins */}
+          {stations.map((station) => (
             <Marker
+              key={station._id}
               position={{
-                lat: selectedStation.coordinates.lat,
-                lng: selectedStation.coordinates.lng,
+                lat: station.coordinates.lat,
+                lng: station.coordinates.lng,
               }}
-              onClick={() => onSelectStation(selectedStation)}
+              onClick={() => onSelectStation(station)}
             />
-          )}
+          ))}
         </GoogleMap>
       )}
     </div>
