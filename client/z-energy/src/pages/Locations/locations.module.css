@@ -44,3 +44,23 @@
 /* .filterMenuContainer {
   border: 3px solid red;
 } */
+
+
+/* Mobile view */
+@media (max-width: 600px) { /* adjust breakpoint as needed */
+  .cardsAndMap {
+    flex-direction: column; /* stack vertically */
+
+  }
+
+  .mapContainer {
+    padding: 1rem; /* adjust spacing for mobile */
+    order: 1;
+  }
+
+  .cardOverlayContainer {
+    max-width: 100%; 
+    margin: 0px auto;
+    order: 2;
+  }
+}
