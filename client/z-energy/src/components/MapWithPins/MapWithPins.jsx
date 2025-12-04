@@ -19,7 +19,7 @@ export default function MapWithPins({
 
   useEffect(() => {
     if (mapRef.current && selectedStation) {
-      mapRef.current.setZoom(14); 
+      mapRef.current.setZoom(14);
       mapRef.current.panTo({
         lat: selectedStation.coordinates.lat,
         lng: selectedStation.coordinates.lng,
@@ -38,7 +38,7 @@ export default function MapWithPins({
         <GoogleMap
           onLoad={onLoad}
           mapContainerStyle={{ width: "100%", height: "100%" }}
-          center={defaultCenter} 
+          center={defaultCenter}
           zoom={14}
         >
           {stations.map((station) => (

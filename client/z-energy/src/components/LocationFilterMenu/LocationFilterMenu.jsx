@@ -2,11 +2,7 @@ import { useState } from "react";
 import styles from "./LocationFilterMenu.module.css";
 import SearchIcon from "../../assets/Search.svg";
 
-export default function LocationFilterMenu({
-  stations,
-  services,
-  onSelectService,
-}) {
+export default function LocationFilterMenu({ services, onSelectService }) {
   const [selected, setSelected] = useState([]);
 
   const toggleService = (service) => {
