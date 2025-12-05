@@ -62,6 +62,7 @@ export default function Location() {
 
       if (selectedServices.length === 0) {
         setUseStations(allStations);
+        if (allStations.length > 0) setSelectedStation(allStations[0]);
         setIsloaded(true);
         return;
       }
@@ -75,6 +76,11 @@ export default function Location() {
         );
 
         setUseStations(res.data);
+        console.log("res.data.length", res.data.length);
+        if (res.data.length > 0) {
+          setSelectedStation(res.data[0]);
+        }
+
         setIsloaded(true);
       } catch (err) {
         console.error("Error fetching filtered stations:", err);
