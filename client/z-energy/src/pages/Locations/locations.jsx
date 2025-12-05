@@ -18,36 +18,43 @@ export default function Location() {
 
   // use API to get all Stations +  set setSelectedStation + derive allServices (unique services) from allStations.services
   useEffect(() => {
-    const fetchStations = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_URI}/api/stations/list`
-        );
-        const data = res.data;
-        setAllStations(data);
+    const fetchAllData = async () => {
+      setIsloaded(false);
 
-        if (data.length > 0) setSelectedStation(data[0]);
+      const fetchStations = async () => {
+        try {
+          const resStations = await axios.get(
+            `${import.meta.env.VITE_API_URI}/api/stations/list`
+          );
+          const stations = resStations.data;
+          setAllStations(stations);
+          if (stations.length > 0) setSelectedStation(stations[0]);
+          setUseStations(stations);
+        } catch (err) {
+          console.error("Error fetching stations:", err);
+        }
+      };
 
-        const servicesSet = new Set();
-        data.forEach((station) =>
-          station.services.forEach((service) => servicesSet.add(service))
-        );
-        setAllServices(
-          Array.from(servicesSet).sort((a, b) => a.localeCompare(b))
-        );
+      const fetchServices = async () => {
+        try {
+          const resServices = await axios.get(
+            `${import.meta.env.VITE_API_URI}/api/stations/services`
+          );
+          setAllServices(resServices.data);
+        } catch (err) {
+          console.error("Error fetching services:", err);
+        }
+      };
 
-        setUseStations(data);
-        setIsloaded(true);
-      } catch (err) {
-        console.error("Error fetching stations:", err);
-      }
+      // Wait for both to finish
+      await Promise.all([fetchStations(), fetchServices()]);
+
+      setIsloaded(true);
     };
 
-    fetchStations();
+    fetchAllData();
   }, []);
 
-  // TODO : Will be replaced by API "/stations/search?keyword=" which takes a list
-  // of selected services, and returns all stations with that service
   // Fetch filtered stations whenever selectedServices changes
   useEffect(() => {
     const getFilteredStations = async () => {

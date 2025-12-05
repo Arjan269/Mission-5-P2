@@ -8,6 +8,7 @@ const {
   getStationById,
   compareStations,
   searchStations,
+  getAllServices,
 } = require("../controllers/stationController");
 
 // Dropdown list
@@ -18,6 +19,9 @@ router.get("/compare", compareStations);
 
 // Returns filtered station based on selected services - locations page
 router.get("/search", searchStations);
+
+// Returns sorted list of services - Location page LocationMenuFilter
+router.get("/services", getAllServices);
 
 // Station detail page
 router.get("/:id", getStationById);

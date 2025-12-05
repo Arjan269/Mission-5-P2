@@ -82,3 +82,26 @@ exports.searchStations = async (req, res) => {
     res.status(500).json({ error: "Server error searching stations" });
   }
 };
+
+exports.getAllServices = async (req, res) => {
+  try {
+    // Fetch all services from all stations
+    const stations = await Station.find({}, "services"); // only fetch services field
+    const servicesSet = new Set();
+
+    stations.forEach((station) =>
+      station.services.forEach((service) =>
+        servicesSet.add(service.toLowerCase())
+      )
+    );
+
+    const sortedServices = Array.from(servicesSet).sort((a, b) =>
+      a.localeCompare(b)
+    );
+
+    res.json(sortedServices);
+  } catch (err) {
+    console.error("Error fetching services:", err);
+    res.status(500).json({ error: "Server error fetching services" });
+  }
+};
