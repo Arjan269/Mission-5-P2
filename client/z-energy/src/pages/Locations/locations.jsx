@@ -102,7 +102,11 @@ export default function Location() {
         <div className={styles.cardOverlayContainer}>
           {useStations.length > 0 ? (
             useStations.map((station) => (
-              <MapStationCard key={station.name} station={station} />
+              <MapStationCard
+                key={station.name}
+                station={station}
+                onClick={() => setSelectedStation(station)}
+              />
             ))
           ) : (
             <MapStationCard station={null} />

@@ -1,7 +1,7 @@
 import styles from "./MapStationCard.module.css";
 import { useNavigate } from "react-router-dom";
 
-export default function MapStationCard({ station }) {
+export default function MapStationCard({ station, onClick }) {
   const navigate = useNavigate();
 
   const handleVisitClick = () => {
@@ -9,7 +9,7 @@ export default function MapStationCard({ station }) {
   };
 
   return station ? (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <div className={styles.topOfCard}>
         <h2>{station.name}</h2>
         <h3>{station.address}</h3>
@@ -52,7 +52,7 @@ export default function MapStationCard({ station }) {
       </div>
     </div>
   ) : (
-    <div >
+    <div>
       <p className={styles.noStations}>No stations available</p>
     </div>
   );
