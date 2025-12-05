@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import styles from "./MapWithPins.module.css";
 
 export default function MapWithPins({
-  stations,
+  stations = [],
   selectedStation,
   onSelectStation,
 }) {
@@ -18,7 +18,7 @@ export default function MapWithPins({
   };
 
   useEffect(() => {
-    if (mapRef.current && selectedStation) {
+    if (mapRef.current && selectedStation?.coordinates) {
       mapRef.current.setZoom(14);
       mapRef.current.panTo({
         lat: selectedStation.coordinates.lat,
@@ -27,10 +27,9 @@ export default function MapWithPins({
     }
   }, [selectedStation]);
 
-  const defaultCenter = {
-    lat: stations[0].coordinates.lat,
-    lng: stations[0].coordinates.lng,
-  };
+  // Set default center: use first station if available, otherwise fallback to a default location
+  const defaultCenter = selectedStation?.coordinates ||
+    stations[0]?.coordinates || { lat: -36.8485, lng: 174.7633 }; // Auckland center as default
 
   return (
     <div className={styles.outerDiv}>
@@ -41,16 +40,21 @@ export default function MapWithPins({
           center={defaultCenter}
           zoom={14}
         >
-          {stations.map((station) => (
-            <Marker
-              key={station._id}
-              position={{
-                lat: station.coordinates.lat,
-                lng: station.coordinates.lng,
-              }}
-              onClick={() => onSelectStation(station)}
-            />
-          ))}
+          {/* Only render markers if stations exist */}
+          {stations.length > 0 &&
+            stations.map(
+              (station) =>
+                station.coordinates && (
+                  <Marker
+                    key={station._id}
+                    position={{
+                      lat: station.coordinates.lat,
+                      lng: station.coordinates.lng,
+                    }}
+                    onClick={() => onSelectStation(station)}
+                  />
+                )
+            )}
         </GoogleMap>
       )}
     </div>

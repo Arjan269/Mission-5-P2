@@ -8,7 +8,7 @@ export default function MapStationCard({ station }) {
     navigate("/station", { state: { station: station } });
   };
 
-  return (
+  return station ? (
     <div className={styles.card}>
       <div className={styles.topOfCard}>
         <h2>{station.name}</h2>
@@ -50,6 +50,10 @@ export default function MapStationCard({ station }) {
           </button>
         </div>
       </div>
+    </div>
+  ) : (
+    <div >
+      <p className={styles.noStations}>No stations available</p>
     </div>
   );
 }

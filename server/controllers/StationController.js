@@ -54,3 +54,31 @@ exports.compareStations = async (req, res) => {
     res.status(500).json({ error: "Server error comparing stations" });
   }
 };
+
+exports.searchStations = async (req, res) => {
+  try {
+    const { services } = req.query;
+
+    if (!services) {
+      return res
+        .status(400)
+        .json({ error: "Missing services query parameter" });
+    }
+
+    const serviceList = services.split(",").map((s) => s.trim().toLowerCase());
+
+    // Find stations where ALL services match
+    const stations = await Station.find({
+      services: {
+        $all: serviceList.map((s) => new RegExp(`^${s}$`, "i")), // case-insensitive
+      },
+    });
+
+    console.log("Stations:", stations);
+
+    res.json(stations);
+  } catch (err) {
+    console.error("Error searching stations:", err);
+    res.status(500).json({ error: "Server error searching stations" });
+  }
+};
