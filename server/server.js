@@ -14,7 +14,11 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", 
+  })
+);
 
 // Routes
 app.use("/api/stations", require("./routes/stationRoutes"));
@@ -25,5 +29,5 @@ app.get("/", (req, res) => {
 });
 
 // Server listen
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050; 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

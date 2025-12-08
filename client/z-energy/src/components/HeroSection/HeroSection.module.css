@@ -1,0 +1,11 @@
+.heroWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* The PNG already has the orange diagonal + station photo baked in */
+}
