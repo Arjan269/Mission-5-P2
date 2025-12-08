@@ -1,57 +1,73 @@
-// controllers/stationController.js
-
+// server/controllers/stationController.js
 const Station = require("../models/Station");
 
-// GET /api/stations/list
-// Returns: _id, name, suburb, city (for dropdown list)
-exports.getStationsList = async (req, res) => {
-  try {
-    const stations = await Station.find({});
+// NORMALIZER — converts seed format → model format
+function normalize(station) {
+  return {
+    _id: station._id,
+    name: station.name,
+    address: station.address,
+    suburb: station.suburb,
+    city: station.city,
 
-    res.json(stations);
+    // Convert {lat, lng} → GeoJSON style
+    location: {
+      type: "Point",
+      coordinates: [
+        station.coordinates?.lng || 0,
+        station.coordinates?.lat || 0
+      ]
+    },
+
+    // Convert prices object → array
+    prices: Object.entries(station.prices || {}).map(([fuelType, data]) => ({
+      fuelType,
+      price: data.price
+    })),
+
+    services: station.services || [],
+    openingHours: station.openingHours || {},
+    lastUpdated: station.lastUpdated || new Date()
+  };
+}
+
+// GET ALL STATIONS (list for dropdowns)
+exports.getStationsList = async (req, res, next) => {
+  try {
+    const stations = await Station.find();
+    const normalized = stations.map(s => normalize(s.toObject()));
+    res.json(normalized);
   } catch (err) {
-    console.error("Error fetching station list:", err);
-    res.status(500).json({ error: "Server error fetching stations list" });
+    next(err);
   }
 };
 
-// GET /api/stations/:id
-// Returns full station details
-exports.getStationById = async (req, res) => {
+// GET /api/stations/:id (detail page)
+exports.getStationById = async (req, res, next) => {
   try {
     const station = await Station.findById(req.params.id);
+    if (!station) return res.status(404).json({ message: "Station not found" });
 
-    if (!station) {
-      return res.status(404).json({ error: "Station not found" });
-    }
-
-    res.json(station);
+    res.json(normalize(station.toObject()));
   } catch (err) {
-    console.error("Error fetching station details:", err);
-    res.status(500).json({ error: "Server error fetching station details" });
+    next(err);
   }
 };
 
-// GET /api/stations/compare?id1=xxx&id2=yyy
-// Returns both stations for your comparison page
-exports.compareStations = async (req, res) => {
+// price comparison endpoint
+exports.compareStations = async (req, res, next) => {
   try {
-    const { id1, id2 } = req.query;
-
-    if (!id1 || !id2) {
-      return res.status(400).json({ error: "Both id1 and id2 are required" });
+    const ids = req.query.ids?.split(",");
+    if (!ids || ids.length < 2) {
+      return res.status(400).json({ message: "Please provide at least 2 station IDs" });
     }
 
-    const station1 = await Station.findById(id1);
-    const station2 = await Station.findById(id2);
+    const stations = await Station.find({ _id: { $in: ids } });
+    const normalized = stations.map(s => normalize(s.toObject()));
 
-    res.json({
-      left: station1 || null,
-      right: station2 || null,
-    });
+    res.json(normalized);
   } catch (err) {
-    console.error("Error comparing stations:", err);
-    res.status(500).json({ error: "Server error comparing stations" });
+    next(err);
   }
 };
 

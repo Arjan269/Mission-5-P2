@@ -1,24 +1,32 @@
+// server/models/Station.js
 const mongoose = require("mongoose");
 
-const StationSchema = new mongoose.Schema({
-  name: String,
-  address: String,
 
-  // Dynamic object of fuel types -> price objects
-  prices: {
-    type: Map,
-    of: new mongoose.Schema(
-      {
-        price: Number,
-      },
-      { _id: false }
-    ),
+const PriceSchema = new mongoose.Schema({
+  fuelType: String,
+  price: Number,
+  updatedAt: { type: Date, default: Date.now },
+});
+
+const StationSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  address: String,
+  suburb: String,
+  city: String,
+
+
+  location: {
+    type: { type: String, default: "Point" },
+    coordinates: [Number], // [lng, lat]
   },
 
-  // List of services
+  prices: {
+    type: mongoose.Schema.Types.Mixed, 
+    default: {},
+  },
+
   services: [String],
 
-  isOpen24Hours: Boolean,
   openingHours: {
     mon: String,
     tue: String,
@@ -29,10 +37,9 @@ const StationSchema = new mongoose.Schema({
     sun: String,
   },
 
-  coordinates: {
-    lat: Number,
-    lng: Number,
-  },
+  image: String,
+  isOpen24Hours: Boolean,
+  lastUpdated: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Station", StationSchema);

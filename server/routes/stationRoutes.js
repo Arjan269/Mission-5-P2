@@ -1,5 +1,4 @@
 // routes/stationRoutes.js
-
 const express = require("express");
 const router = express.Router();
 
@@ -11,10 +10,8 @@ const {
   getAllServices,
 } = require("../controllers/stationController");
 
-// Dropdown list
-router.get("/list", getStationsList);
+router.get("/", getStationsList);
 
-// Price comparison
 router.get("/compare", compareStations);
 
 // Returns filtered station based on selected services - locations page
@@ -24,6 +21,6 @@ router.get("/search", searchStations);
 router.get("/services", getAllServices);
 
 // Station detail page
-router.get("/:id", getStationById);
+router.get("/id/:id", getStationById);
 
 module.exports = router;

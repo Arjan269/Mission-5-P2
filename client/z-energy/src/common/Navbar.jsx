@@ -3,97 +3,106 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
-import ZLogo from "../assets/z-energy-logo.png"; 
+import ZLogo from "../assets/z-energy-logo.png";
+import LanguageIcon from "../assets/Language.png";
+import SearchIcon from "../assets/Search.svg";
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <header className={styles.wrapper}>
-      {/* COLLAPSED HEADER */}
-      {!menuOpen && (
-        <div className={styles.headerBar}>
-          <div className={styles.left}>
-            <Link to="/" className={styles.logoLink}>
-              <img src={ZLogo} alt="Z Energy" className={styles.logo} />
-            </Link>
-          </div>
+      {/* Always-visible header bar */}
+      <div className={styles.headerBar}>
+        <button
+          type="button"
+          className={styles.logoButton}
+          onClick={closeMenu}
+        >
+          <Link to="/" className={styles.logoLink}>
+            <img src={ZLogo} alt="Z Energy" className={styles.logo} />
+          </Link>
+        </button>
 
-          <div className={styles.right}>
-            <button className={styles.iconButton}>🌐</button>
-            <button className={styles.iconButton}>🔍</button>
+        <div className={styles.rightIcons}>
+          {/* Language icon */}
+          <button type="button" className={styles.iconButton}>
+            <img src={LanguageIcon} alt="Language" className={styles.iconImage} />
+          </button>
 
-            <div className={styles.dividerVertical}></div>
+          {/* Search icon */}
+          <button type="button" className={styles.iconButton}>
+            <img src={SearchIcon} alt="Search" className={styles.iconImage} />
+          </button>
 
-            <button
-              className={styles.iconButton}
-              onClick={() => setMenuOpen(true)}
-            >
-              ☰
-            </button>
-          </div>
+          {/* Burger / close toggle */}
+          <button
+            type="button"
+            className={styles.iconButton}
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
         </div>
-      )}
+      </div>
 
-      {/* EXPANDED MENU */}
+      {/* Popup nav bar */}
       {menuOpen && (
-        <nav className={styles.menuBar}>
-          {/* LOGO */}
-          <div className={styles.menuLogoArea}>
-            <Link to="/" className={styles.logoLink}>
-              <img src={ZLogo} alt="Z Energy" className={styles.menuLogo} />
-            </Link>
-          </div>
-
-          {/* LEFT SECTION */}
+        <nav className={styles.menuBar} aria-label="Main navigation">
           <div className={styles.menuLeft}>
-            {/* At the station */}
-            <button className={styles.menuItemWithArrow}>
+            <button type="button" className={styles.menuItemWithArrow}>
               At the station <span className={styles.arrow}>▾</span>
             </button>
 
-            {/* Compare stations */}
             <Link
               to="/price-comp"
-              className={styles.menuItemLink}
-              onClick={() => setMenuOpen(false)}
+              className={styles.menuLinkWithArrow}
+              onClick={closeMenu}
             >
               Compare stations <span className={styles.arrow}>▾</span>
             </Link>
 
-            {/* Z App → official website */}
             <a
               href="https://www.z.co.nz/"
               target="_blank"
-              rel="noopener noreferrer"
-              className={styles.menuItemLink}
+              rel="noreferrer"
+              className={styles.menuLinkWithArrow}
+              onClick={closeMenu}
             >
               Z App <span className={styles.arrow}>▾</span>
             </a>
 
-            {/* Locations */}
             <Link
               to="/locations"
-              className={styles.menuItemLink}
-              onClick={() => setMenuOpen(false)}
+              className={styles.menuLink}
+              onClick={closeMenu}
             >
               Locations
             </Link>
           </div>
 
-          {/* RIGHT SECTION */}
           <div className={styles.menuRight}>
-            <span className={styles.divider}></span>
+            <span className={styles.divider} />
 
-            <button className={styles.linkButton}>About Z</button>
-            <button className={styles.linkButton}>Help And Support</button>
+            <button type="button" className={styles.linkButton}>
+              About Z
+            </button>
 
-            <button className={styles.loginButton}>
+            <button type="button" className={styles.linkButton}>
+              Help And Support
+            </button>
+
+            <button type="button" className={styles.loginButton}>
               Login <span className={styles.loginArrow}>➜</span>
             </button>
 
             <button
+              type="button"
               className={styles.closeButton}
-              onClick={() => setMenuOpen(false)}
+              onClick={closeMenu}
             >
               ✕
             </button>
