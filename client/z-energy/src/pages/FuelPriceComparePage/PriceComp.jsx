@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./priceCompStyles.module.css";
 import StationDropdown from "./StationDropdown";
 import StationCard from "./StationCard";
-import HeroSection from "../../components/HeroSection";
+import HeroSection from "../../components/HeroSection/HeroSection";
 
 const API_URL = "http://localhost:5050/api/stations";
 

@@ -29,20 +29,12 @@ export default function Navbar() {
         <div className={styles.rightIcons}>
           {/* Language icon */}
           <button type="button" className={styles.iconButton}>
-            <img
-              src={LanguageIcon}
-              alt="Language"
-              className={styles.iconImage}
-            />
+            <img src={LanguageIcon} alt="Language" className={styles.iconImage} />
           </button>
 
           {/* Search icon */}
           <button type="button" className={styles.iconButton}>
-            <img
-              src={SearchIcon}
-              alt="Search"
-              className={styles.iconImage}
-            />
+            <img src={SearchIcon} alt="Search" className={styles.iconImage} />
           </button>
 
           {/* Burger / close toggle */}
@@ -57,7 +49,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Popup nav bubble that drops under header */}
+      {/* Popup nav bar */}
       {menuOpen && (
         <nav className={styles.menuBar} aria-label="Main navigation">
           <div className={styles.menuLeft}>
@@ -105,6 +97,14 @@ export default function Navbar() {
 
             <button type="button" className={styles.loginButton}>
               Login <span className={styles.loginArrow}>➜</span>
+            </button>
+
+            <button
+              type="button"
+              className={styles.closeButton}
+              onClick={closeMenu}
+            >
+              ✕
             </button>
           </div>
         </nav>

@@ -1,15 +1,21 @@
+/* PAGE WRAPPER */
 .pageWrapper {
   width: 100%;
   background: #ffffff;
   font-family: Inter, sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+/* MAIN COMPARE CARD */
 .compareCard {
   max-width: 1150px;
-  margin: 20px auto;
+  margin: 20px auto 80px auto;
   padding: 20px;
+  min-height: 600px;
 }
 
+/* TOP ROW */
 .topRow {
   display: flex;
   flex-direction: column;
@@ -29,7 +35,7 @@
   font-size: 16px;
 }
 
-/* Fuel filter bar */
+/* FUEL FILTER */
 .fuelFilterRow {
   display: flex;
   align-items: center;
@@ -62,13 +68,14 @@
   color: white;
 }
 
-/* Columns */
+/* TWO COLUMN LAYOUT */
 .columnsWrapper {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  height: auto;
 }
 
 .column {
@@ -76,13 +83,14 @@
   min-width: 300px;
 }
 
-/* Divider between the two cards */
+/* DIVIDER */
 .verticalDivider {
   width: 1px;
   background: #d0d0d0;
-  height: 100%;
+  height: auto;
 }
 
+/* STATUS TEXT */
 .statusText,
 .errorText {
   font-size: 14px;
@@ -93,7 +101,71 @@
   color: red;
 }
 
-/* Responsive */
+/* ---------- DROPDOWN ---------- */
+
+.dropdownWrapper {
+  margin-bottom: 12px;
+}
+
+.dropdown {
+  width: 75%;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  background: #f37500;
+  border: 1px solid #f37500;
+  color: white;
+}
+
+/* ---------- STATION CARD ---------- */
+
+.stationCard {
+  background: #ffffff;
+  padding: 16px 20px;
+  margin-top: 14px;
+  border-radius: 14px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.stationName {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.priceList {
+  margin-bottom: 14px;
+}
+
+.priceRow {
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+.servicesHeader {
+  font-size: 15px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.servicesList {
+  margin: 0 0 14px 16px;
+  padding: 0;
+}
+
+.distanceText {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
 @media (max-width: 900px) {
   .columnsWrapper {
     flex-direction: column;
@@ -103,43 +175,12 @@
   .verticalDivider {
     display: none;
   }
-}
 
-/* DROPDOWN WRAPPER */
-.dropdownWrapper {
-  margin-bottom: 12px;
-}
+  .stationCard {
+    width: 100%;
+  }
 
-/* ORANGE "SELECT A STATION" DROPDOWN */
-.dropdown {
-  width: 75%;
-  padding: 10px 40px 10px 16px;
-
-  background-color: #f37500;   /* Z ENERGY ORANGE */
-  color: white;
-  font-weight: 600;
-
-  border-radius: 20px;
-  border: 2px solid #f37500;
-  cursor: pointer;
-  font-size: 14px;
-
-  /* Remove default arrow */
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  /* Custom white arrow */
-  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='14' width='14' xmlns='http://www.w3.org/2000/svg'><path d='M4 6l3 3 3-3z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-}
-
-.dropdown:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(243, 117, 0, 0.35);
-}
-
-.dropdown option {
-  color: black; /* keep dropdown list readable */
+  .dropdown {
+    width: 100%;
+  }
 }
