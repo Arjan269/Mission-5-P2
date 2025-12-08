@@ -23,7 +23,7 @@ export default function Location() {
       const fetchStations = async () => {
         try {
           const resStations = await axios.get(
-            `${import.meta.env.VITE_API_URI}/api/stations/list`
+            `${import.meta.env.VITE_API_URI}/api/stations/`
           );
           const stations = resStations.data;
           setAllStations(stations);

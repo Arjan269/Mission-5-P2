@@ -11,23 +11,20 @@ function normalize(station) {
     city: station.city,
 
     // Convert {lat, lng} → GeoJSON style
-    location: {
-      type: "Point",
-      coordinates: [
-        station.coordinates?.lng || 0,
-        station.coordinates?.lat || 0
-      ]
+    coordinates: {
+      lat: station.coordinates?.lat || 0,
+      lng: station.coordinates?.lng || 0,
     },
 
     // Convert prices object → array
     prices: Object.entries(station.prices || {}).map(([fuelType, data]) => ({
       fuelType,
-      price: data.price
+      price: data.price,
     })),
 
     services: station.services || [],
     openingHours: station.openingHours || {},
-    lastUpdated: station.lastUpdated || new Date()
+    lastUpdated: station.lastUpdated || new Date(),
   };
 }
 
@@ -35,7 +32,7 @@ function normalize(station) {
 exports.getStationsList = async (req, res, next) => {
   try {
     const stations = await Station.find();
-    const normalized = stations.map(s => normalize(s.toObject()));
+    const normalized = stations.map((s) => normalize(s.toObject()));
     res.json(normalized);
   } catch (err) {
     next(err);
@@ -59,11 +56,13 @@ exports.compareStations = async (req, res, next) => {
   try {
     const ids = req.query.ids?.split(",");
     if (!ids || ids.length < 2) {
-      return res.status(400).json({ message: "Please provide at least 2 station IDs" });
+      return res
+        .status(400)
+        .json({ message: "Please provide at least 2 station IDs" });
     }
 
     const stations = await Station.find({ _id: { $in: ids } });
-    const normalized = stations.map(s => normalize(s.toObject()));
+    const normalized = stations.map((s) => normalize(s.toObject()));
 
     res.json(normalized);
   } catch (err) {
