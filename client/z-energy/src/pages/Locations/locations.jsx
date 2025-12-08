@@ -13,8 +13,7 @@ export default function Location() {
   const [selectedStation, setSelectedStation] = useState(null);
   const [selectedServices, setSelectedServices] = useState([]);
   const [isLoaded, setIsloaded] = useState(false);
-
-  // TODO: very later on, implement prompt to ask for users location - and send list of stations in sorted order relative to users location
+  const [userLocation, setUserLocation] = useState(null);
 
   // use API to get all Stations +  set setSelectedStation + derive allServices (unique services) from allStations.services
   useEffect(() => {
@@ -54,6 +53,36 @@ export default function Location() {
 
     fetchAllData();
   }, []);
+
+  // TODO: very later on, implement prompt to ask for users location - and send list of stations in sorted order relative to users location
+
+  useEffect(() => {
+    const requestUserLocation = () => {
+      if (!navigator.geolocation) {
+        console.error("Geolocation not supported");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userCoords = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
+
+          setUserLocation(userCoords);
+          console.log(userCoords);
+        },
+        (err) => {
+          console.error("Error getting location:", err);
+        }
+      );
+    };
+
+    if (isLoaded && userLocation === null) {
+      requestUserLocation();
+    }
+  }, [isLoaded]);
 
   // Fetch filtered stations whenever selectedServices changes
   useEffect(() => {
@@ -106,6 +135,7 @@ export default function Location() {
       <div className={styles.cardsAndMap}>
         {/* Overlay */}
         <div className={styles.cardOverlayContainer}>
+          {/* TODO : if user agrees to share location - add text that says "Closest to you" */}
           {useStations.length > 0 ? (
             useStations.map((station) => (
               <MapStationCard
