@@ -14,6 +14,7 @@ export default function Location() {
   const [selectedServices, setSelectedServices] = useState([]);
   const [isLoaded, setIsloaded] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
+  const [isSharingLocation, setIsSharingLocation] = useState(false);
 
   // use API to get all Stations +  set setSelectedStation + derive allServices (unique services) from allStations.services
   useEffect(() => {
@@ -54,8 +55,6 @@ export default function Location() {
     fetchAllData();
   }, []);
 
-  // TODO: very later on, implement prompt to ask for users location - and send list of stations in sorted order relative to users location
-
   useEffect(() => {
     const requestUserLocation = () => {
       if (!navigator.geolocation) {
@@ -94,8 +93,10 @@ export default function Location() {
           { params: userLocation }
         );
 
+        setAllStations(res.data);
         setUseStations(res.data);
-        console.log(res.data);
+        setIsSharingLocation(true);
+        // console.log(res.data);
         if (res.data.length > 0) {
           setSelectedStation(res.data[0]);
         }
@@ -127,10 +128,14 @@ export default function Location() {
           }
         );
 
-        setUseStations(res.data);
-        console.log("res.data.length", res.data.length);
-        if (res.data.length > 0) {
-          setSelectedStation(res.data[0]);
+        // Preserve sorted order 
+        const filtered = allStations.filter((s) =>
+          res.data.some((r) => r._id === s._id)
+        );
+
+        setUseStations(filtered);
+        if (filtered.length > 0) {
+          setSelectedStation(filtered[0]);
         }
 
         setIsloaded(true);
@@ -159,6 +164,11 @@ export default function Location() {
         {/* Overlay */}
         <div className={styles.cardOverlayContainer}>
           {/* TODO : if user agrees to share location - add text that says "Closest to you" */}
+
+          {isSharingLocation && (
+            <div className={styles.closestLabel}>Closest to you</div>
+          )}
+
           {useStations.length > 0 ? (
             useStations.map((station) => (
               <MapStationCard
