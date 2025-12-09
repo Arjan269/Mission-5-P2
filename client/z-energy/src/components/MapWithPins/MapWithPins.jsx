@@ -52,6 +52,9 @@ export default function MapWithPins({
       const img = document.createElement("img");
       img.src = iconUrl;
       img.style.cursor = "pointer";
+      img.alt = isSelected
+        ? `${station.name}, selected marker`
+        : `${station.name} marker`;
 
       const marker = new AdvancedMarkerElement({
         map: mapRef.current,
@@ -91,7 +94,11 @@ export default function MapWithPins({
     };
 
   return (
-    <div className={styles.outerDiv}>
+    <div
+      className={styles.outerDiv}
+      role="region"
+      aria-label="Map showing station locations"
+    >
       {isLoaded && (
         <GoogleMap
           onLoad={onLoad}

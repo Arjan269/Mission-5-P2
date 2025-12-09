@@ -17,7 +17,7 @@ export default function LocationFilterMenu({
 
   return (
     <div className={styles.filterMenu}>
-      <button className={styles.searchButton}>
+      <button className={styles.searchButton} aria-label="Search services">
         <img src={SearchIcon} className={styles.searchIcon} />
       </button>
       <div className={styles.servicesContainer}>
@@ -32,9 +32,17 @@ export default function LocationFilterMenu({
           <button
             key={service}
             className={
-              selectedServices.includes(service) ? styles.selected : styles.unselected
+              selectedServices.includes(service)
+                ? styles.selected
+                : styles.unselected
             }
             onClick={() => toggleService(service)}
+            aria-pressed={selectedServices.includes(service)}
+            aria-label={
+              selectedServices.includes(service)
+                ? `${service}, selected`
+                : `${service}, unselected`
+            }
           >
             {service}
           </button>

@@ -9,7 +9,13 @@ export default function MapStationCard({ station, onClick }) {
   };
 
   return station ? (
-    <div className={styles.card} onClick={onClick}>
+    <div
+      className={styles.card}
+      onClick={onClick}
+      role="button"
+      tabIndex="0"
+      aria-label={`View details for ${station.name}`}
+    >
       <div className={styles.topOfCard}>
         <h2>{station.name}</h2>
         <h3>{station.address}</h3>
@@ -31,7 +37,11 @@ export default function MapStationCard({ station, onClick }) {
         </ul>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.visitButton} onClick={handleVisitClick}>
+          <button
+            className={styles.visitButton}
+            onClick={handleVisitClick}
+            aria-label={`Visit page for ${station.name}`}
+          >
             Visit Now
             <span className={styles.iconCircle}>
               <svg
@@ -53,7 +63,9 @@ export default function MapStationCard({ station, onClick }) {
     </div>
   ) : (
     <div>
-      <p className={styles.noStations}>No stations available</p>
+      <p className={styles.noStations} role="status">
+        No stations available
+      </p>
     </div>
   );
 }

@@ -128,7 +128,7 @@ export default function Location() {
           }
         );
 
-        // Preserve sorted order 
+        // Preserve sorted order
         const filtered = allStations.filter((s) =>
           res.data.some((r) => r._id === s._id)
         );
@@ -152,7 +152,11 @@ export default function Location() {
   return isLoaded ? (
     <div className={styles.container}>
       {/* Location Filter menu */}
-      <div className={styles.filterMenuContainer}>
+      <div
+        className={styles.filterMenuContainer}
+        role="region"
+        aria-label="Station services filter"
+      >
         <LocationFilterMenu
           services={allServices}
           selectedServices={selectedServices}
@@ -162,8 +166,11 @@ export default function Location() {
 
       <div className={styles.cardsAndMap}>
         {/* Overlay */}
-        <div className={styles.cardOverlayContainer}>
-
+        <div
+          className={styles.cardOverlayContainer}
+          role="region"
+          aria-label="Station list"
+        >
           {isSharingLocation && (
             <div className={styles.closestLabel}>Closest to you</div>
           )}
