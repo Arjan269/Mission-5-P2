@@ -16,7 +16,8 @@ export default function Location() {
   const [userLocation, setUserLocation] = useState(null);
   const [isSharingLocation, setIsSharingLocation] = useState(false);
 
-  // use API to get all Stations +  set setSelectedStation + derive allServices (unique services) from allStations.services
+  // Fetch all stations and available services on initial page load
+  // Sets the first station as selected by default and stores all unique services
   useEffect(() => {
     const fetchAllData = async () => {
       setIsloaded(false);
@@ -46,7 +47,7 @@ export default function Location() {
         }
       };
 
-      // Wait for both to finish
+      // Wait for both stations and services to be fetched before marking as loaded
       await Promise.all([fetchStations(), fetchServices()]);
 
       setIsloaded(true);
@@ -55,6 +56,8 @@ export default function Location() {
     fetchAllData();
   }, []);
 
+  // Request the user's geolocation once the page has loaded
+  // Stores the location in state if permission is granted
   useEffect(() => {
     const requestUserLocation = () => {
       if (!navigator.geolocation) {
@@ -82,7 +85,8 @@ export default function Location() {
     }
   }, [isLoaded]);
 
-  // Fetch nearby stations when we get user location
+  // Fetch stations near the user's current location
+  // Updates the list of stations and sets the closest station as selected
   useEffect(() => {
     const fetchNearby = async () => {
       if (!userLocation) return;
@@ -96,7 +100,6 @@ export default function Location() {
         setAllStations(res.data);
         setUseStations(res.data);
         setIsSharingLocation(true);
-        // console.log(res.data);
         if (res.data.length > 0) {
           setSelectedStation(res.data[0]);
         }
@@ -108,7 +111,8 @@ export default function Location() {
     fetchNearby();
   }, [userLocation]);
 
-  // Fetch filtered stations whenever selectedServices changes
+  // Fetch filtered stations whenever selected services change
+  // Updates the displayed list and keeps the first filtered station selected
   useEffect(() => {
     const getFilteredStations = async () => {
       setIsloaded(false);
@@ -128,7 +132,7 @@ export default function Location() {
           }
         );
 
-        // Preserve sorted order
+        // Preserve the original order of allStations while filtering
         const filtered = allStations.filter((s) =>
           res.data.some((r) => r._id === s._id)
         );
@@ -165,7 +169,7 @@ export default function Location() {
       </div>
 
       <div className={styles.cardsAndMap}>
-        {/* Overlay */}
+        {/* Overlay with station cards */}
         <div
           className={styles.cardOverlayContainer}
           role="region"
@@ -188,7 +192,7 @@ export default function Location() {
           )}
         </div>
 
-        {/* Map */}
+        {/* Map showing station locations */}
         <div className={styles.mapContainer}>
           {selectedStation && (
             <MapWithPins
