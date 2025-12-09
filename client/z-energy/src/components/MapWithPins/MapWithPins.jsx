@@ -41,6 +41,15 @@ export default function MapWithPins({
           mapContainerStyle={{ width: "100%", height: "100%" }}
           center={defaultCenter}
           zoom={14}
+          options={{
+            disableDefaultUI: true, // disables all controls
+            zoomControl: false, // hide zoom buttons
+            mapTypeControl: false, // hide Map / Satellite toggle
+            streetViewControl: false, // hide Pegman
+            fullscreenControl: true, // show fullscreen button
+            rotateControl: false, // disable rotate control
+            gestureHandling: "greedy", // allow drag + scroll without controls interfering
+          }}
         >
           {/* Only render markers if stations exist */}
           {stations.length > 0 &&
