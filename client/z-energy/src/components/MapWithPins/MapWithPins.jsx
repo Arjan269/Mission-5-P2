@@ -1,4 +1,4 @@
-import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useRef, useEffect } from "react";
 import styles from "./MapWithPins.module.css";
 import customMarker from "../../assets/customMarker.png";
@@ -14,11 +14,66 @@ export default function MapWithPins({
   });
 
   const mapRef = useRef(null);
+  const markersRef = useRef([]); // store AdvancedMarkerElement instances
+  const markerLibraryRef = useRef(null);
 
-  const onLoad = (map) => {
+  // Load map
+  const onLoad = async (map) => {
     mapRef.current = map;
+
+    // Load Google marker library once
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    markerLibraryRef.current = { AdvancedMarkerElement };
+
+    renderMarkers(); // render initial markers
   };
 
+  // Helper to clear markers
+  const clearMarkers = () => {
+    markersRef.current.forEach((m) => m.setMap(null));
+    markersRef.current = [];
+  };
+
+  // Render AdvancedMarkers
+  const renderMarkers = () => {
+    if (!mapRef.current || !markerLibraryRef.current) return;
+
+    const { AdvancedMarkerElement } = markerLibraryRef.current;
+
+    clearMarkers();
+
+    stations.forEach((station) => {
+      if (!station.coordinates) return;
+
+      const isSelected = selectedStation?._id === station._id;
+      const iconUrl = isSelected ? customMarker : defaultMarker;
+
+      // Use an <img> as the marker content
+      const img = document.createElement("img");
+      img.src = iconUrl;
+      img.style.cursor = "pointer";
+
+      const marker = new AdvancedMarkerElement({
+        map: mapRef.current,
+        position: {
+          lat: station.coordinates.lat,
+          lng: station.coordinates.lng,
+        },
+        content: img,
+      });
+
+      marker.addListener("click", () => onSelectStation(station));
+
+      markersRef.current.push(marker);
+    });
+  };
+
+  // Update marker icons when the selected station changes
+  useEffect(() => {
+    renderMarkers();
+  }, [selectedStation, stations]);
+
+  // Pan map when a station is selected
   useEffect(() => {
     if (mapRef.current && selectedStation?.coordinates) {
       mapRef.current.setZoom(14);
@@ -29,9 +84,11 @@ export default function MapWithPins({
     }
   }, [selectedStation]);
 
-  // Set default center: use first station if available, otherwise fallback to a default location
   const defaultCenter = selectedStation?.coordinates ||
-    stations[0]?.coordinates || { lat: -36.8485, lng: 174.7633 }; // Auckland center as default
+    stations[0]?.coordinates || {
+      lat: -36.8485,
+      lng: 174.7633,
+    };
 
   return (
     <div className={styles.outerDiv}>
@@ -42,36 +99,16 @@ export default function MapWithPins({
           center={defaultCenter}
           zoom={14}
           options={{
-            disableDefaultUI: true, // disables all controls
-            zoomControl: false, // hide zoom buttons
-            mapTypeControl: false, // hide Map / Satellite toggle
-            streetViewControl: false, // hide Pegman
-            fullscreenControl: true, // show fullscreen button
-            rotateControl: false, // disable rotate control
-            gestureHandling: "greedy", // allow drag + scroll without controls interfering
+            mapId: "DEMO_MAP_ID",
+            disableDefaultUI: true,
+            zoomControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: true,
+            rotateControl: false,
+            gestureHandling: "greedy",
           }}
-        >
-          {/* Only render markers if stations exist */}
-          {stations.length > 0 &&
-            stations.map(
-              (station) =>
-                station.coordinates && (
-                  <Marker
-                    key={station._id}
-                    position={{
-                      lat: station.coordinates.lat,
-                      lng: station.coordinates.lng,
-                    }}
-                    onClick={() => onSelectStation(station)}
-                    icon={
-                      selectedStation?._id === station._id
-                        ? customMarker
-                        : defaultMarker
-                    }
-                  />
-                )
-            )}
-        </GoogleMap>
+        />
       )}
     </div>
   );
