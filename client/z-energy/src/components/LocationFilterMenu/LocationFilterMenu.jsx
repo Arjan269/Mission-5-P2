@@ -21,7 +21,14 @@ export default function LocationFilterMenu({
         <img src={SearchIcon} className={styles.searchIcon} />
       </button>
       <div className={styles.servicesContainer}>
-        {services.map((service) => (
+        {[
+          ...services
+            .filter((s) => selectedServices.includes(s))
+            .sort((a, b) => a.localeCompare(b)), // selected, alphabetical
+          ...services
+            .filter((s) => !selectedServices.includes(s))
+            .sort((a, b) => a.localeCompare(b)), // unselected, alphabetical
+        ].map((service) => (
           <button
             key={service}
             className={
