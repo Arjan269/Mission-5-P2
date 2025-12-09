@@ -106,9 +106,7 @@ exports.getAllServices = async (req, res) => {
     const servicesSet = new Set();
 
     stations.forEach((station) =>
-      station.services.forEach((service) =>
-        servicesSet.add(service.toLowerCase())
-      )
+      station.services.forEach((service) => servicesSet.add(service))
     );
 
     const sortedServices = Array.from(servicesSet).sort((a, b) =>

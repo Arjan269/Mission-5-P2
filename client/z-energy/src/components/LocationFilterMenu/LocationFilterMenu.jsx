@@ -32,7 +32,7 @@ export default function LocationFilterMenu({
           <button
             key={service}
             className={
-              selectedServices.includes(service) ? styles.selected : ""
+              selectedServices.includes(service) ? styles.selected : styles.unselected
             }
             onClick={() => toggleService(service)}
           >

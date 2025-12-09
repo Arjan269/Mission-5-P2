@@ -24,7 +24,7 @@
   overflow-x: hidden;
 
   scrollbar-width: thin;
-  scrollbar-color: #F4F1EB white;
+  scrollbar-color: #f4f1eb white;
 }
 
 .mapContainer {
@@ -34,7 +34,7 @@
   padding: 3rem 1rem 3rem 0rem;
 }
 
-.closestLabel{
+.closestLabel {
   font-weight: 700;
   font-size: 15px;
   color: #303030;
@@ -42,19 +42,18 @@
 }
 
 /* Mobile view */
-@media (max-width: 600px) { 
+@media (max-width: 600px) {
   .cardsAndMap {
-    flex-direction: column; 
-
+    flex-direction: column;
   }
 
   .mapContainer {
-    padding: 1rem; 
+    padding: 1rem;
     order: 1;
   }
 
   .cardOverlayContainer {
-    max-width: 100%; 
+    max-width: 100%;
     margin: 0px 1rem;
     order: 2;
   }
