@@ -12,7 +12,7 @@
   flex-wrap: nowrap;
 }
 
-.searchButton, .selected, .unselected {
+.searchButton, .selected, .unselected, .searchInput {
   white-space: nowrap;
   cursor: pointer;
   border-radius: 15px;
@@ -23,6 +23,11 @@
   font-weight: 900;
   font-size: 15px;
   color: #001B85;
+}
+
+.searchInput {
+  font-weight: 400;
+  color: #000000;
 }
 
 .selected {
