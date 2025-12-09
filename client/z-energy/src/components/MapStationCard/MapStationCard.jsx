@@ -1,11 +1,13 @@
+import { useState } from "react";
 import styles from "./MapStationCard.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function MapStationCard({ station, onClick }) {
   const navigate = useNavigate();
+  const [showHours, setShowHours] = useState(false);
 
   const handleVisitClick = () => {
-    navigate("/station", { state: { station: station } });
+    navigate("/station", { state: { station } });
   };
 
   return station ? (
@@ -19,12 +21,29 @@ export default function MapStationCard({ station, onClick }) {
       <div className={styles.topOfCard}>
         <h2>{station.name}</h2>
         <h3>{station.address}</h3>
+
         {station.isOpen24Hours ? (
           <p>Open 24 hours</p>
         ) : (
-          <p>Opening Hours ▼</p>
-        )}{" "}
-        {/* Their figma design only shows Open 24 hours */}
+          <li
+            className={styles.openingHours}
+            onClick={(e) => {
+              e.stopPropagation(); // prevent card click
+              setShowHours(!showHours);
+            }}
+          >
+            <p>Opening Hours {showHours ? "▲" : "▼"} </p>
+            {showHours && (
+              <ul className={styles.dailyHours}>
+                {Object.entries(station.openingHours).map(([day, hour]) => (
+                  <li key={day}>
+                    {day.charAt(0).toUpperCase() + day.slice(1)}: {hour}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        )}
       </div>
 
       <div className={styles.bottomOfCard}>

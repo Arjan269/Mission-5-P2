@@ -24,6 +24,7 @@ function normalize(station) {
     })),
 
     services: station.services || [],
+    isOpen24Hours: station.isOpen24Hours || false,
     openingHours: station.openingHours || {},
     lastUpdated: station.lastUpdated || new Date(),
   };

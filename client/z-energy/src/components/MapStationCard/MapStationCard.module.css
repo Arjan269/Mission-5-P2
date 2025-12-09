@@ -42,6 +42,11 @@ p {
   font-weight: 900;
 }
 
+.dailyHours li {
+  font-weight: 400;
+  font-size: 15px;
+}
+
 .topOfCard h2 {
   size: 30px;
   color: #001b85;
