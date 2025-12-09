@@ -48,7 +48,8 @@
   }
 
   .mapContainer {
-    padding: 1rem;
+    padding: 0px;
+    margin: 10px 0px;
     order: 1;
   }
 
