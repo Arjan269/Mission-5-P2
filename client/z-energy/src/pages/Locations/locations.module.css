@@ -1,31 +1,25 @@
 .container {
   flex: 1;
   overflow: visible;
-  /* height: 100%; */
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
-  /* border: 2px solid red; */
 }
 
 .cardsAndMap {
-  /* border: 3px solid purple; */
   display: flex;
   flex-direction: row;
-  /* height: 94%; */
   flex: 1;
   overflow: hidden;
 }
 
 .cardOverlayContainer {
-  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
   flex: 1;
   width: fit-content;
   max-width: 450px;
-  margin: 1rem;
+  margin: 2rem 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -34,33 +28,34 @@
 }
 
 .mapContainer {
-  /* border: 3px solid purple; */
   display: flex;
   flex-grow: 1;
   width: auto;
   padding: 3rem 1rem 3rem 0rem;
 }
 
-/* .filterMenuContainer {
-  border: 3px solid red;
-} */
-
+.closestLabel{
+  font-weight: 700;
+  font-size: 15px;
+  color: #303030;
+  opacity: 0.7;
+}
 
 /* Mobile view */
-@media (max-width: 600px) { /* adjust breakpoint as needed */
+@media (max-width: 600px) { 
   .cardsAndMap {
-    flex-direction: column; /* stack vertically */
+    flex-direction: column; 
 
   }
 
   .mapContainer {
-    padding: 1rem; /* adjust spacing for mobile */
+    padding: 1rem; 
     order: 1;
   }
 
   .cardOverlayContainer {
     max-width: 100%; 
-    margin: 0px auto;
+    margin: 0px 1rem;
     order: 2;
   }
 }

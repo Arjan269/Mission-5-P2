@@ -163,7 +163,6 @@ export default function Location() {
       <div className={styles.cardsAndMap}>
         {/* Overlay */}
         <div className={styles.cardOverlayContainer}>
-          {/* TODO : if user agrees to share location - add text that says "Closest to you" */}
 
           {isSharingLocation && (
             <div className={styles.closestLabel}>Closest to you</div>
