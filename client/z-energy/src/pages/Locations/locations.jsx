@@ -3,68 +3,198 @@ import styles from "./locations.module.css";
 import MapStationCard from "../../components/MapStationCard/MapStationCard";
 import MapWithPins from "../../components/MapWithPins/MapWithPins";
 import LocationFilterMenu from "../../components/LocationFilterMenu/LocationFilterMenu";
-
-//Will replace with actual API calls once backend is done
-import tempStationsData from "./../../data/tempStationsData";
+import axios from "axios";
 
 export default function Location() {
-  const [selectedStation, setSelectedStation] = useState(tempStationsData[0]);
-  const [selectedService, setSelectedService] = useState([]);
+  const [allStations, setAllStations] = useState([]);
+  const [filteredStations, setFilteredStations] = useState([]);
+  const [useStations, setUseStations] = useState([]);
   const [allServices, setAllServices] = useState([]);
+  const [selectedStation, setSelectedStation] = useState(null);
+  const [selectedServices, setSelectedServices] = useState([]);
+  const [isLoaded, setIsloaded] = useState(false);
+  const [userLocation, setUserLocation] = useState(null);
+  const [isSharingLocation, setIsSharingLocation] = useState(false);
 
-  // TODO: use API to get all Stations and set setSelectedStation
-
-  // TODO: very later on, implement prompt to ask for users location - and send list of stations in sorted order relative to users location
-
-  // TODO: API to get all services base on the enteries in the DB
+  // use API to get all Stations +  set setSelectedStation + derive allServices (unique services) from allStations.services
   useEffect(() => {
-    // Extract unique services from tempStationsData
-    const servicesSet = new Set();
-    tempStationsData.forEach((station) =>
-      station.services.forEach((service) => servicesSet.add(service))
-    );
-    setAllServices([...servicesSet]);
+    const fetchAllData = async () => {
+      setIsloaded(false);
+
+      const fetchStations = async () => {
+        try {
+          const resStations = await axios.get(
+            `${import.meta.env.VITE_API_URI}/api/stations/`
+          );
+          const stations = resStations.data;
+          setAllStations(stations);
+          if (stations.length > 0) setSelectedStation(stations[0]);
+          setUseStations(stations);
+        } catch (err) {
+          console.error("Error fetching stations:", err);
+        }
+      };
+
+      const fetchServices = async () => {
+        try {
+          const resServices = await axios.get(
+            `${import.meta.env.VITE_API_URI}/api/stations/services`
+          );
+          setAllServices(resServices.data);
+        } catch (err) {
+          console.error("Error fetching services:", err);
+        }
+      };
+
+      // Wait for both to finish
+      await Promise.all([fetchStations(), fetchServices()]);
+
+      setIsloaded(true);
+    };
+
+    fetchAllData();
   }, []);
 
-  // TODO : Will be replaced by API "/stations/search?keyword=" which takes a list of selected services, and returns all stations with that service
-  // Filter stations if a service is selected
-  const filteredStations =
-    selectedService.length > 0
-      ? tempStationsData.filter((station) =>
-          selectedService.every((service) => station.services.includes(service))
-        )
-      : tempStationsData;
+  useEffect(() => {
+    const requestUserLocation = () => {
+      if (!navigator.geolocation) {
+        console.error("Geolocation not supported");
+        return;
+      }
 
-  return (
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userCoords = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
+
+          setUserLocation(userCoords);
+        },
+        (err) => {
+          console.error("Error getting location:", err);
+        }
+      );
+    };
+
+    if (isLoaded && userLocation === null) {
+      requestUserLocation();
+    }
+  }, [isLoaded]);
+
+  // Fetch nearby stations when we get user location
+  useEffect(() => {
+    const fetchNearby = async () => {
+      if (!userLocation) return;
+
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URI}/api/stations/nearby`,
+          { params: userLocation }
+        );
+
+        setAllStations(res.data);
+        setUseStations(res.data);
+        setIsSharingLocation(true);
+        // console.log(res.data);
+        if (res.data.length > 0) {
+          setSelectedStation(res.data[0]);
+        }
+      } catch (err) {
+        console.error("Error fetching nearby stations:", err);
+      }
+    };
+
+    fetchNearby();
+  }, [userLocation]);
+
+  // Fetch filtered stations whenever selectedServices changes
+  useEffect(() => {
+    const getFilteredStations = async () => {
+      setIsloaded(false);
+
+      if (selectedServices.length === 0) {
+        setUseStations(allStations);
+        if (allStations.length > 0) setSelectedStation(allStations[0]);
+        setIsloaded(true);
+        return;
+      }
+
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URI}/api/stations/search`,
+          {
+            params: { services: selectedServices.join(",") },
+          }
+        );
+
+        // Preserve sorted order 
+        const filtered = allStations.filter((s) =>
+          res.data.some((r) => r._id === s._id)
+        );
+
+        setUseStations(filtered);
+        if (filtered.length > 0) {
+          setSelectedStation(filtered[0]);
+        }
+
+        setIsloaded(true);
+      } catch (err) {
+        console.error("Error fetching filtered stations:", err);
+        setUseStations(allStations);
+        setIsloaded(true);
+      }
+    };
+
+    getFilteredStations();
+  }, [selectedServices, allStations]);
+
+  return isLoaded ? (
     <div className={styles.container}>
       {/* Location Filter menu */}
       <div className={styles.filterMenuContainer}>
         <LocationFilterMenu
-          stations={filteredStations}
           services={allServices}
-          onSelectService={setSelectedService}
+          selectedServices={selectedServices}
+          onSelectService={setSelectedServices}
         />
       </div>
 
       <div className={styles.cardsAndMap}>
         {/* Overlay */}
         <div className={styles.cardOverlayContainer}>
-          {tempStationsData.map((station) => (
-            <div key={station.name} onClick={() => setSelectedStation(station)}>
-              <MapStationCard station={station} />
-            </div>
-          ))}
+          {/* TODO : if user agrees to share location - add text that says "Closest to you" */}
+
+          {isSharingLocation && (
+            <div className={styles.closestLabel}>Closest to you</div>
+          )}
+
+          {useStations.length > 0 ? (
+            useStations.map((station) => (
+              <MapStationCard
+                key={station.name}
+                station={station}
+                onClick={() => setSelectedStation(station)}
+              />
+            ))
+          ) : (
+            <MapStationCard station={null} />
+          )}
         </div>
 
         {/* Map */}
         <div className={styles.mapContainer}>
-          <MapWithPins
-            stations={tempStationsData}
-            selectedStation={selectedStation}
-            onSelectStation={setSelectedStation}
-          />
+          {selectedStation && (
+            <MapWithPins
+              stations={useStations}
+              selectedStation={selectedStation}
+              onSelectStation={setSelectedStation}
+            />
+          )}
         </div>
       </div>
     </div>
+  ) : (
+    <div className={styles.loading}>Loading...</div>
   );
 }
