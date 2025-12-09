@@ -1,6 +1,8 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { useRef, useEffect } from "react";
 import styles from "./MapWithPins.module.css";
+import customMarker from "../../assets/customMarker.png";
+import defaultMarker from "../../assets/defaultMarker.png";
 
 export default function MapWithPins({
   stations = [],
@@ -52,6 +54,11 @@ export default function MapWithPins({
                       lng: station.coordinates.lng,
                     }}
                     onClick={() => onSelectStation(station)}
+                    icon={
+                      selectedStation?._id === station._id
+                        ? customMarker
+                        : defaultMarker
+                    }
                   />
                 )
             )}
