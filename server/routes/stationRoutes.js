@@ -8,6 +8,7 @@ const {
   compareStations,
   searchStations,
   getAllServices,
+  getStationsNearby,
 } = require("../controllers/stationController");
 
 router.get("/", getStationsList);
@@ -19,6 +20,8 @@ router.get("/search", searchStations);
 
 // Returns sorted list of services - Location page LocationMenuFilter
 router.get("/services", getAllServices);
+
+router.get("/nearby", getStationsNearby);
 
 // Station detail page
 router.get("/id/:id", getStationById);

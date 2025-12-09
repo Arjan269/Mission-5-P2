@@ -1,5 +1,6 @@
 // server/controllers/stationController.js
 const Station = require("../models/Station");
+const { calculateDistance } = require("../utils/calculateDistance");
 
 // NORMALIZER — converts seed format → model format
 function normalize(station) {
@@ -118,5 +119,37 @@ exports.getAllServices = async (req, res) => {
   } catch (err) {
     console.error("Error fetching services:", err);
     res.status(500).json({ error: "Server error fetching services" });
+  }
+};
+
+exports.getStationsNearby = async (req, res, next) => {
+  try {
+    const { lat, lng } = req.query;
+
+    if (!lat || !lng) {
+      return res.status(400).json({ message: "lat and lng are required" });
+    }
+
+    const userLat = parseFloat(lat);
+    const userLng = parseFloat(lng);
+
+    const stations = await Station.find({});
+    let normalized = stations.map((s) => normalize(s.toObject()));
+
+    const withDistance = normalized
+      .map((st) => ({
+        ...st,
+        distanceKm: calculateDistance(
+          userLat,
+          userLng,
+          st.coordinates.lat,
+          st.coordinates.lng
+        ),
+      }))
+      .sort((a, b) => a.distanceKm - b.distanceKm);
+
+    res.json(withDistance);
+  } catch (err) {
+    next(err);
   }
 };

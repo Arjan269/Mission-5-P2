@@ -71,7 +71,6 @@ export default function Location() {
           };
 
           setUserLocation(userCoords);
-          console.log(userCoords);
         },
         (err) => {
           console.error("Error getting location:", err);
@@ -83,6 +82,30 @@ export default function Location() {
       requestUserLocation();
     }
   }, [isLoaded]);
+
+  // Fetch nearby stations when we get user location
+  useEffect(() => {
+    const fetchNearby = async () => {
+      if (!userLocation) return;
+
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URI}/api/stations/nearby`,
+          { params: userLocation }
+        );
+
+        setUseStations(res.data);
+        console.log(res.data);
+        if (res.data.length > 0) {
+          setSelectedStation(res.data[0]);
+        }
+      } catch (err) {
+        console.error("Error fetching nearby stations:", err);
+      }
+    };
+
+    fetchNearby();
+  }, [userLocation]);
 
   // Fetch filtered stations whenever selectedServices changes
   useEffect(() => {
