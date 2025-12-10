@@ -1,7 +1,15 @@
-import styles from "./priceCompStyles.module.css";
+// src/components/StationCard/StationCard.jsx
+import styles from "./StationCard.module.css";
 
-export default function StationCard({ station, prices }) {
+export default function StationCard({ station, prices, distance }) {
   if (!station) return null;
+
+  const distanceValue =
+    typeof distance === "number"
+      ? distance
+      : typeof station?.distance === "number"
+      ? station.distance
+      : null;
 
   return (
     <div className={styles.stationCard}>
@@ -22,7 +30,10 @@ export default function StationCard({ station, prices }) {
         ))}
       </ul>
 
-      <p className={styles.distanceText}>Distance from you: —</p>
+      <p className={styles.distanceText}>
+        Distance from you:{" "}
+        {distanceValue != null ? `${distanceValue.toFixed(2)} km` : "—"}
+      </p>
     </div>
   );
 }
