@@ -1,0 +1,50 @@
+/* Entire two-column layout */
+.columnsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 40px auto;
+  gap: 60px;
+}
+
+/* Each card + dropdown column */
+.column {
+  flex: 1;
+  max-width: 460px;
+}
+
+/* Divider between columns */
+.verticalDivider {
+  width: 1px;
+  background: #d0d0d0;   
+  min-height: 300px;      
+  align-self: stretch;
+}
+
+.compareCard {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  overflow: visible;
+}
+
+/* ---- MOBILE VERSION ---- */
+@media (max-width: 768px) {
+  .columnsWrapper {
+    flex-direction: column;
+    gap: 40px;
+    margin: 20px auto;
+  }
+
+  .verticalDivider {
+     display: block;         
+    width: 1px;
+    background: #d0d0d0;
+    min-height: 200px;
+  }
+
+  .column {
+    max-width: 100%;
+  }
+}

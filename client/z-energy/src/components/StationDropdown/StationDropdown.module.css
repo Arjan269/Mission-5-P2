@@ -1,0 +1,126 @@
+/* Wrapper */
+.wrapper {
+  width: 100%;
+  position: relative;
+}
+
+/* Orange pill button */
+.selectContainer {
+  width: 100%;
+  height: 56px;
+  background: #f37500;
+  border-radius: 999px;
+  border: none;
+
+  padding: 0 16px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+
+  position: relative;
+}
+
+/* Text inside pill */
+.selectedText {
+  flex: 1;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* White circle */
+.arrowCircle {
+  width: 36px;
+  height: 36px;
+  background: white;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Arrow icon */
+.arrowIcon {
+  width: 15px;
+  height: 18px;
+  transition: transform 0.2s ease;
+  transform: rotate(90deg);
+}
+
+/* Flip arrow when open */
+.arrowOpen {
+  transform: rotate(-90deg);
+}
+
+/* Dropdown menu */
+.dropdownMenu {
+  position: absolute;
+  top: 62px;
+
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 20;
+
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+/* Each option */
+.dropdownOption {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #222;
+}
+
+.dropdownOption:hover {
+  background: #f2f2f2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.selectContainer {
+  width: 100%;
+  height: 40px;
+  background: #f37500;
+  border-radius: 999px;
+  border: none;
+
+  padding: 0 12px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: white;
+  font-size: 8px;
+}
+/* White circle */
+.arrowCircle {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Arrow icon */
+.arrowIcon {
+  width: 10px;
+  height: 12px;
+  transition: transform 0.2s ease;
+  transform: rotate(90deg);
+}
+}
