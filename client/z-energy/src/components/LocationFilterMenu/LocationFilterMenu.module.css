@@ -1,44 +1,51 @@
 .filterMenu {
   display: flex;
-  /* align-items: center; */
-  /* width: 100%; */
   gap: 0.5rem;
   overflow-x: scroll;
   padding: 0.5rem 1rem;
   scrollbar-width: none;
-  /* border: 2px solid blue; */
 }
 
 .servicesContainer {
   display: flex;
   gap: 0.5rem;
   flex-wrap: nowrap;
-  /* border: 1px solid blue; */
 }
 
-button {
+.searchButton, .selected, .unselected, .searchInput {
   white-space: nowrap;
   cursor: pointer;
+  border-radius: 15px;
+  border-style: hidden;
+  background-color: white;
+  box-shadow: 5px 3px 5px rgb(0, 0, 0, 0.25);
+
+  font-weight: 900;
+  font-size: 15px;
+  color: #001B85;
+}
+
+.searchInput {
+  font-weight: 400;
+  color: #000000;
 }
 
 .selected {
   background-color: #0070f3;
   color: white;
-  border-radius: 4px;
 }
 
 .searchButton {
-  display: flex;        /* needed for align-items & justify-content to work */
-  align-items: center;  
+  display: flex;
+  align-items: center;
   justify-content: center;
   margin: 0px;
   padding: 5px;
   border-radius: 50%;
-
 }
 
 .searchIcon {
   height: 15px;
   width: 15px;
-  display: block;       /* removes any inline spacing */
+  display: block;
 }

@@ -24,6 +24,7 @@ function normalize(station) {
     })),
 
     services: station.services || [],
+    isOpen24Hours: station.isOpen24Hours || false,
     openingHours: station.openingHours || {},
     lastUpdated: station.lastUpdated || new Date(),
   };
@@ -106,9 +107,7 @@ exports.getAllServices = async (req, res) => {
     const servicesSet = new Set();
 
     stations.forEach((station) =>
-      station.services.forEach((service) =>
-        servicesSet.add(service.toLowerCase())
-      )
+      station.services.forEach((service) => servicesSet.add(service))
     );
 
     const sortedServices = Array.from(servicesSet).sort((a, b) =>

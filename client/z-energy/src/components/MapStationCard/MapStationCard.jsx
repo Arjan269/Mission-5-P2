@@ -1,24 +1,49 @@
+import { useState } from "react";
 import styles from "./MapStationCard.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function MapStationCard({ station, onClick }) {
   const navigate = useNavigate();
+  const [showHours, setShowHours] = useState(false);
 
   const handleVisitClick = () => {
-    navigate("/station", { state: { station: station } });
+    navigate("/station", { state: { station } });
   };
 
   return station ? (
-    <div className={styles.card} onClick={onClick}>
+    <div
+      className={styles.card}
+      onClick={onClick}
+      role="button"
+      tabIndex="0"
+      aria-label={`View details for ${station.name}`}
+    >
       <div className={styles.topOfCard}>
         <h2>{station.name}</h2>
         <h3>{station.address}</h3>
+
         {station.isOpen24Hours ? (
           <p>Open 24 hours</p>
         ) : (
-          <p>Opening Hours ▼</p>
-        )}{" "}
-        {/* Their figma design only shows Open 24 hours */}
+          <li
+            className={styles.openingHours}
+            onClick={(e) => {
+              e.stopPropagation(); // prevent card click
+              setShowHours(!showHours);
+            }}
+          >
+            <p>Opening Hours {showHours ? "▲" : "▼"} </p>
+            {showHours && (
+              <ul className={styles.dailyHours}>
+                {Object.entries(station.openingHours).map(([day, hour]) => (
+                  <li key={day}>
+                    {day.charAt(0).toUpperCase() + day.slice(1)}: {hour}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        )}
       </div>
 
       <div className={styles.bottomOfCard}>
@@ -31,7 +56,11 @@ export default function MapStationCard({ station, onClick }) {
         </ul>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.visitButton} onClick={handleVisitClick}>
+          <button
+            className={styles.visitButton}
+            onClick={handleVisitClick}
+            aria-label={`Visit page for ${station.name}`}
+          >
             Visit Now
             <span className={styles.iconCircle}>
               <svg
@@ -53,7 +82,9 @@ export default function MapStationCard({ station, onClick }) {
     </div>
   ) : (
     <div>
-      <p className={styles.noStations}>No stations available</p>
+      <p className={styles.noStations} role="status">
+        No stations available
+      </p>
     </div>
   );
 }

@@ -6,4 +6,11 @@
   overflow: hidden;
 }
 
-
+/* Mobile view */
+@media (max-width: 600px) {
+  .outerDiv {
+    border-radius: 0px;
+    border-left: none;
+    border-right: none;
+  }
+}
