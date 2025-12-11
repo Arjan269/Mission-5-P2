@@ -1,6 +1,6 @@
 import HeroSection from "../../components/HeroSection/HeroSection";
-import landingBottomHalf from "../../assets/landingBottomHalf.png"
-import styles from "./Home.module.css"
+import landingBottomHalf from "../../assets/landingBottomHalf.png";
+import styles from "./Home.module.css";
 
 export default function Home() {
   return (
@@ -10,9 +10,11 @@ export default function Home() {
       <HeroSection />
 
       {/* Temporary placeholder below */}
-
-        <img src={landingBottomHalf} className={styles.bottomHalf}/>
-
+      <img
+        src={landingBottomHalf}
+        alt="Illustration of landing section"
+        className={styles.bottomHalf}
+      />
     </div>
   );
 }
