@@ -1,16 +1,20 @@
 import HeroSection from "../../components/HeroSection/HeroSection";
+import landingBottomHalf from "../../assets/landingBottomHalf.png";
+import styles from "./Home.module.css";
 
 export default function Home() {
   return (
-    <div>
+    <div className={styles.mainDiv}>
       {/* Hero banner */}
+
       <HeroSection />
 
       {/* Temporary placeholder below */}
-      <div style={{ padding: "20px" }}>
-        <h1>Home Page</h1>
-        <p>Welcome to the Home page!</p>
-      </div>
+      <img
+        src={landingBottomHalf}
+        alt="Illustration of landing section"
+        className={styles.bottomHalf}
+      />
     </div>
   );
 }

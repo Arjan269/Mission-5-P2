@@ -23,7 +23,17 @@ export default function HeroSection() {
 
   return (
     <section className={styles.heroWrapper}>
-      <img src={useSrc} alt="Hero banner" className={styles.heroImage} />
+      <img
+        src={useSrc}
+        alt={
+          location.pathname === "/"
+            ? "Landing page hero illustration"
+            : location.pathname === "/price-comp"
+            ? "Fuel price comparison page hero illustration"
+            : "Hero banner"
+        }
+        className={styles.heroImage}
+      />
     </section>
   );
 }
