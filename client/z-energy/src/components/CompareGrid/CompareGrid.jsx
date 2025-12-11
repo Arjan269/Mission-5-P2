@@ -2,5 +2,13 @@
 import styles from "./CompareGrid.module.css";
 
 export default function CompareGrid({ children }) {
-  return <div className={styles.compareGrid}>{children}</div>;
+  return (
+    <div
+      className={styles.compareGrid}
+      role="region"
+      aria-label="Fuel price comparison grid"
+    >
+      {children}
+    </div>
+  );
 }

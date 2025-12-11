@@ -12,25 +12,39 @@ export default function StationCard({ station, prices, distance }) {
       : null;
 
   return (
-    <div className={styles.stationCard}>
+    <div
+      className={styles.stationCard}
+      role="region"
+      aria-label={`Station card for ${station.name}`}
+    >
       <h3 className={styles.stationName}>{station.name}</h3>
 
-      <div className={styles.priceList}>
+      <div className={styles.priceList} role="list" aria-label="Fuel prices">
         {prices.map((p, i) => (
-          <p key={i} className={styles.priceRow}>
+          <p key={i} className={styles.priceRow} role="listitem">
             <strong>{p.label}:</strong> ${p.price.toFixed(2)} per litre
           </p>
         ))}
       </div>
 
       <h4 className={styles.servicesHeader}>Available services:</h4>
-      <ul className={styles.servicesList}>
+      <ul
+        className={styles.servicesList}
+        aria-label="Available services at this station"
+      >
         {station.services?.map((s, i) => (
           <li key={i}>{s}</li>
         ))}
       </ul>
 
-      <p className={styles.distanceText}>
+      <p
+        className={styles.distanceText}
+        aria-label={`Distance from you: ${
+          distanceValue != null
+            ? `${distanceValue.toFixed(2)} kilometers`
+            : "not available"
+        }`}
+      >
         Distance from you:{" "}
         {distanceValue != null ? `${distanceValue.toFixed(2)} km` : "—"}
       </p>
