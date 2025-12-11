@@ -171,7 +171,9 @@ export default function PriceComp() {
         <div className={styles.topRow}>
           {!locationEnabled && (
             <p className={styles.locationHint}>
-              <span className={styles.locationIcon}>ⓘ</span>
+              <span className={styles.locationIcon} aria-label="Information">
+                ⓘ
+              </span>
               Please enable location access for better accuracy:
             </p>
           )}
@@ -185,6 +187,7 @@ export default function PriceComp() {
                 fuelFilter === "all" ? styles.fuelFilterButtonActive : ""
               }`}
               onClick={() => setFuelFilter("all")}
+              aria-label="Show all fuel types"
             >
               ⛽ All
             </button>
@@ -195,6 +198,7 @@ export default function PriceComp() {
                 fuelFilter === "91" ? styles.fuelFilterButtonActive : ""
               }`}
               onClick={() => setFuelFilter("91")}
+              aria-label="Show 91 octane fuel prices"
             >
               🟧 91
             </button>
@@ -205,6 +209,7 @@ export default function PriceComp() {
                 fuelFilter === "95" ? styles.fuelFilterButtonActive : ""
               }`}
               onClick={() => setFuelFilter("95")}
+              aria-label="Show 95 octane fuel prices"
             >
               🟦 95
             </button>
@@ -215,6 +220,7 @@ export default function PriceComp() {
                 fuelFilter === "diesel" ? styles.fuelFilterButtonActive : ""
               }`}
               onClick={() => setFuelFilter("diesel")}
+              aria-label="Show diesel fuel prices"
             >
               🛢 Diesel
             </button>
@@ -222,9 +228,15 @@ export default function PriceComp() {
         </div>
 
         {/* ---------- LOADING / ERROR ---------- */}
-        {loading && <p className={styles.statusText}>Loading stations…</p>}
+        {loading && (
+          <p className={styles.statusText} role="status" aria-live="polite">
+            Loading stations…
+          </p>
+        )}
         {error && !loading && (
-          <p className={styles.errorText}>{error}</p>
+          <p className={styles.errorText} role="alert">
+            {error}
+          </p>
         )}
 
         {/* ---------- GRID ---------- */}
@@ -232,7 +244,10 @@ export default function PriceComp() {
           <CompareGrid>
             <div className={styles.columnsWrapper}>
               {/* LEFT COLUMN */}
-              <div className={styles.column}>
+              <div
+                className={styles.column}
+                aria-label="Left station selection and info"
+              >
                 <div className={styles.dropdownWrapper}>
                   <StationDropdown
                     stations={stations}
@@ -253,7 +268,10 @@ export default function PriceComp() {
               <div className={styles.verticalDivider} />
 
               {/* RIGHT COLUMN */}
-              <div className={styles.column}>
+              <div
+                className={styles.column}
+                aria-label="Right station selection and info"
+              >
                 <div className={styles.dropdownWrapper}>
                   <StationDropdown
                     stations={stations}
